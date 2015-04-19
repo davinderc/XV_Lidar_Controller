@@ -1,3 +1,5 @@
+#include <Boards.h>
+
 /*
   XV Lidar Controller v1.2.2
  
@@ -40,7 +42,7 @@ struct EEPROM_Config {
 } 
 xv_config;
 
-const byte EEPROM_ID = 0x05;  // used to validate EEPROM initialized
+const byte EEPROM_ID = 0x06;  // used to validate EEPROM initialized
 
 double pwm_val = 500;  // start with ~50% power
 double pwm_last;
@@ -55,7 +57,7 @@ unsigned long lastMillis = millis();
 
 PID rpmPID(&motor_rpm, &pwm_val, &xv_config.rpm_setpoint, xv_config.Kp, xv_config.Ki, xv_config.Kd, DIRECT);
 
-uint8_t inByte = 0;  // incoming serial byte
+uint8_t inByte = 0;  // incoming serial byteMo
 uint16_t data_status = 0;
 uint16_t data_4deg_index = 0;
 uint16_t data_loop_index = 0;
@@ -68,8 +70,9 @@ uint16_t angle;
 
 SerialCommand sCmd;
 
-const int ledPin = 11;
-boolean ledState = LOW;
+const int motorPin = 5;
+const int ledPin = 17;
+boolean ledState = HIGH;
 
 void setup() {
   EEPROM_readAnything(0, xv_config);
@@ -99,7 +102,7 @@ void loop() {
   if (Serial1.available() > 0) {
     inByte = Serial1.read();  // get incoming byte:
     if (xv_config.raw_data) {
-      Serial.print(inByte, BYTE);  // relay
+      Serial.write(byte(inByte));  // relay
     }
     decodeData(inByte);
   }
@@ -162,10 +165,10 @@ void readData(unsigned char inByte) {
     angle = data_4deg_index * 4;  // 1st angle in the set of 4
     if (angle == 0) {
       if (ledState) {
-        ledState = LOW;
+        ledState = HIGH;
       } 
       else {
-        ledState = HIGH;
+        ledState = LOW;
       }
       digitalWrite(ledPin, ledState);
       if (xv_config.show_dist) {
@@ -328,19 +331,19 @@ void readData(unsigned char inByte) {
 }
 
 void initEEPROM() {
-  xv_config.id = 0x05;
+  xv_config.id = 0x06;
   strcpy(xv_config.version, "1.2.2");
-  xv_config.motor_pwm_pin = 9;  // pin connected N-Channel Mosfet
+  xv_config.motor_pwm_pin = motorPin;  // pin connected N-Channel Mosfet
 
   xv_config.rpm_setpoint = 300;  // desired RPM
   xv_config.rpm_min = 200;
-  xv_config.rpm_max = 300;
+  xv_config.rpm_max = 400;
   xv_config.pwm_min = 100;
   xv_config.pwm_max = 1023;
   xv_config.sample_time = 20;
-  xv_config.Kp = 2.0;
-  xv_config.Ki = 1.0;
-  xv_config.Kd = 0.0;
+  xv_config.Kp = 1.50;
+  xv_config.Ki = 1.10;
+  xv_config.Kd = 0.5;
 
   xv_config.motor_enable = true;
   xv_config.raw_data = true;
@@ -473,7 +476,7 @@ void motorCheck() {  // Make sure the motor RPMs are good else shut it down
     }
     if (rpm_err > rpm_err_thresh) {
       motorOff(); 
-      ledState = LOW;
+      ledState = HIGH;
       digitalWrite(ledPin, ledState);
     }
     motor_check_timer = millis();
