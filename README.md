@@ -1,11 +1,11 @@
 XV Lidar Controller
 ===================
 
-Control the Neato XV Lidar with an Arduino compatible board
-
+Control the Neato XV Lidar with an Arduino compatible board.  This has been forked from https://github.com/getSurreal/XV_Lidar_Controller and has been modified to use the Sparkfun Pro Micro and an external H-Bridge 
 Used as an interface board to connect directly to the Neato XV Lidar and control the rotation speed through Pulse Width Modulation (PWM).
 
 Copyright 2014 James LeRoy getSurreal.com
+v1.3.0 - 2014/04/28 seaton@strobotics.com.au (Stephen Eaton) Ported to Pro Micro + external Motor Driver
 v1.2.2 - Updated 2015/02/23
 * http://www.getsurreal.com/products/xv-lidar-controller
 * https://github.com/getSurreal/XV_Lidar_Controller
@@ -22,19 +22,19 @@ The XV Lidar Controller receives the serial data from the XV Lidar looking for t
 
 ###Hardware
 * Neato XV Lidar - Available on eBay
-* Teensy 2.0 http://www.pjrc.com/teensy
-* XV Lidar Controller Board by getSurreal http://www.getsurreal.com/xv-lidar-controller
-* Firmware https://github.com/getSurreal/XV_Lidar_Controller
+* Sparkfun Pro Micro https://www.sparkfun.com/products/12640
+*  L9110 H-Bridge Board by http://www.dx.com/p/l9110-dual-channel-h-bridge-motor-driver-module-for-arduino-black-157149#.VT8B38622NU) or any external MOSFet board Connected to Pin 5 of Sparkfun Pro Micro.
+* Firmware https://github.com/madeinoz67/XV_Lidar_Controller
 
 
 ###Software to build from source
 * Arduino IDE (v1.0.6 tested. Newer or older may work)
-* Teensyduino - Software add-on to run Arduino sketches on the Teensy (v1.19 tested. Newer or older may work)
- http://www.pjrc.com/teensy/teensyduino.html
+* promicro - Software add-on to run Arduino sketches on the ProMicro (v1.19 tested. Newer or older may work)
+ https://github.com/sparkfun/SF32u4_boards/archive/master.zip
 * Copy the included libraries to the Arduino libraries directory
 
 ##Usage
-Connect to the Teensy USB port at 115200 baud.  When sending commands use the newline character to signify the end of a command.
+Connect to the Pro Micro USB port at 115200 baud.  When sending commands use the newline character to signify the end of a command.
 
 ##Commands
 Commands are case sensitive.
