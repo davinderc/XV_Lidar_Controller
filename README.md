@@ -5,7 +5,9 @@ Control the Neato XV Lidar with an Arduino compatible board.  This has been fork
 Used as an interface board to connect directly to the Neato XV Lidar and control the rotation speed through Pulse Width Modulation (PWM).
 
 Copyright 2014 James LeRoy getSurreal.com
+
 v1.3.0 - 2014/04/28 seaton@strobotics.com.au (Stephen Eaton) Ported to Pro Micro + external Motor Driver
+
 v1.2.2 - Updated 2015/02/23
 * http://www.getsurreal.com/products/xv-lidar-controller
 * https://github.com/getSurreal/XV_Lidar_Controller
