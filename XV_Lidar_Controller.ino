@@ -7,6 +7,8 @@
  
  Changes for Sparkfun Pro Micro seaton@strobotics.com.au (Stephen Eaton)
  https://github.com/madeinoz67/XV_Lidar_Controller
+ 
+ 3Dprinted Stand for Lidar unit available on thingiverse: http://www.thingiverse.com/thing:796866
 
  See README for additional information 
  
