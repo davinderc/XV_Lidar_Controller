@@ -1,12 +1,13 @@
 #include <Boards.h>
 
 /*
-  XV Lidar Controller v1.2.2
+  XV Lidar Controller v1.3.0
  
  Copyright 2014 James LeRoy getSurreal
- https://github.com/getSurreal/XV_Lidar_Controller
- http://www.getsurreal.com/products/xv-lidar-controller
  
+ Changes for Sparkfun Pro Micro seaton@strobotics.com.au (Stephen Eaton)
+ https://github.com/madeinoz67/XV_Lidar_Controller
+
  See README for additional information 
  
  The F() macro in the Serial statements tells the compiler to keep your strings in PROGMEM
@@ -42,7 +43,7 @@ struct EEPROM_Config {
 } 
 xv_config;
 
-const byte EEPROM_ID = 0x06;  // used to validate EEPROM initialized
+const byte EEPROM_ID = 0x07;  // used to validate EEPROM initialized, increment this to re-write your eeprom with new default values
 
 double pwm_val = 500;  // start with ~50% power
 double pwm_last;
@@ -70,8 +71,8 @@ uint16_t angle;
 
 SerialCommand sCmd;
 
-const int motorPin = 5;
-const int ledPin = 17;
+const int motorPin = 5;       // pro Micro Timer 3 PWM pin
+const int ledPin = 17;        // Only configurable onboard LED, is also sed on Tx so not really useful
 boolean ledState = HIGH;
 
 void setup() {
@@ -331,8 +332,8 @@ void readData(unsigned char inByte) {
 }
 
 void initEEPROM() {
-  xv_config.id = 0x06;
-  strcpy(xv_config.version, "1.2.2");
+  xv_config.id = EEPROM_ID;
+  strcpy(xv_config.version, "1.3.0");
   xv_config.motor_pwm_pin = motorPin;  // pin connected N-Channel Mosfet
 
   xv_config.rpm_setpoint = 300;  // desired RPM
